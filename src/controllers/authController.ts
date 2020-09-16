@@ -15,12 +15,7 @@ class AuthController {
     await emailService.sendActivationToken(user);
     res.status(201).json({
       status: 'Successfull',
-      message: 'User created',
-      data: {
-        username: user.name,
-        email: user.email,
-        role: user.role
-      }
+      message: `Activation email sent to ${user.email}`
     });
   };
   static activateAccount = async (req: Request, res: Response): Promise<void> => {
@@ -29,7 +24,7 @@ class AuthController {
     await authService.setAuthCookies(res, tokens);
     res.status(200).json({
       status: 'Successfull',
-      message: 'Account activated successfully'
+      message: `Account activated successfully for ${user.email}`
     });
   };
 

@@ -64,8 +64,9 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  hashPassword(): void {
-    this.password = bcrypt.hashSync(this.password, 8);
+  async hashLocalPassword(): Promise<void> {
+    this.password = await bcrypt.hash(this.password, 12);
+    this.passwordConfirm = undefined; // We don't want to persist the confirm pass to DB - only used for validation
   }
 
   checkIfUnencryptedPasswordIsValid(unencryptedPassword: string): boolean {

@@ -6,11 +6,17 @@ import CreateUserDto from '../../dtos/createUser';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default async (payload: CreateUserDto): Promise<ISignUpUser> => {
+  if (payload.password != payload.passwordConfirm)
+    throw new AppError('Password and Confirm Password do not match.', 400);
   const user = new User();
   user.name = payload.name;
   user.password = payload.password;
+  user.passwordConfirm = payload.passwordConfirm;
   user.email = payload.email;
   user.role = payload.role;
+
+  //Hash the password, to securely store on DB
+  await user.hashLocalPassword();
 
   const activationToken = await user.createAccountActivationToken();
   const userRepository = await getRepository(User);

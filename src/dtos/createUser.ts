@@ -8,6 +8,9 @@ class CreateUserDto {
   public password: string;
 
   @IsString()
+  public passwordConfirm: string;
+
+  @IsString()
   public role: string;
 
   @IsString()
