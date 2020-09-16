@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, Unique, CreateDateColumn, Updat
 import { Length, IsNotEmpty, IsEmail } from 'class-validator';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
-import UserToClientDto from '../dto/userToClient';
+import UserToClientDto from '../dtos/userToClient';
 
 @Entity()
 @Unique(['email'])

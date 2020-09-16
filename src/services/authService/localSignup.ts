@@ -2,7 +2,7 @@ import { User } from '../../entity/User';
 import { getRepository } from 'typeorm';
 import AppError from '../../utils/appError';
 import { ISignUpUser } from '../../interfaces/user.interfaces';
-import CreateUserDto from '../../dto/createUser';
+import CreateUserDto from '../../dtos/createUser';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default async (payload: CreateUserDto): Promise<ISignUpUser> => {
