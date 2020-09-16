@@ -6,5 +6,9 @@ export default {
   emailPort: process.env.EMAILPORT,
   emailUser: process.env.EMAILUSER,
   emailPassword: process.env.EMAILPASSWORD,
-  clientUrl: process.env.CLIENTURL
+  clientUrl: process.env.CLIENTURL,
+  tokenExpiresIn: process.env.TOKENEXPIRES,
+  refreshTokenExpiresIn: process.env.REFRESHTOKENEXPIRES,
+  cookieExpires: process.env.COOKIEEXPIRES,
+  refreshCookieExpires: process.env.REFRESHCOOKIEEXPIRES
 };

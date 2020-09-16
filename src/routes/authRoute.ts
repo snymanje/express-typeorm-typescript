@@ -5,9 +5,9 @@ import validateRequest from '../middlewares/validate';
 import CreateUserDto from '../dtos/createUser';
 
 const router = Router();
-//Login route
-router.post('/login', AuthController.login);
 
+router.post('/activate/:activationToken', AuthController.activateAccount);
+router.post('/login', AuthController.login);
 router.post('/localSignup', [validateRequest(CreateUserDto)], AuthController.localSignUp);
 
 //Change my password

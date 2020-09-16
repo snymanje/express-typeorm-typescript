@@ -23,6 +23,16 @@ class AuthController {
       }
     });
   };
+  static activateAccount = async (req: Request, res: Response): Promise<void> => {
+    const user = await authService.activateAccount(req.params.activationToken);
+    const tokens = await authService.generateTokens(user);
+    await authService.setAuthCookies(res, tokens);
+    res.status(200).json({
+      status: 'Successfull',
+      message: 'Account activated successfully'
+    });
+  };
+
   static login = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     //Check if username and password are set
     const { name, password } = req.body;
