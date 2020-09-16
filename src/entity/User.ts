@@ -2,37 +2,59 @@ import { Entity, PrimaryGeneratedColumn, Column, Unique, CreateDateColumn, Updat
 import { Length, IsNotEmpty, IsEmail } from 'class-validator';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
+import UserToClientDto from '../dto/userToClient';
 
 @Entity()
-@Unique(['username'])
+@Unique(['email'])
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
+  @Column({ default: 'local', nullable: true })
+  authMethod: string;
+
+  @Column({ default: false })
+  active: boolean;
+
+  @Column({ default: 'user' })
+  @IsNotEmpty()
+  role: string;
+
+  @Column()
   @Length(4, 20, {
     message: 'Length must be between 4 and 20 characters, please.'
   })
-  username: string;
+  name: string;
 
-  @Column({ nullable: false })
-  @Length(6, 100, {
-    message: 'Password must have a minimum of 6 character, please.'
+  @Column({ nullable: true })
+  @Length(8, 100, {
+    message: 'Password must have a minimum of 8 character, please.'
   })
   password: string;
+
+  @Column({ nullable: true })
+  @Length(8, 100, {
+    message: 'Password must have a minimum of 8 character, please.'
+  })
+  passwordConfirm: string;
 
   @Column({ nullable: false })
   @IsEmail(
     {},
     {
-      message: 'Please provide a validate email address.'
+      message: 'Please provide a valid email address.'
     }
   )
   email: string;
 
-  @Column({ nullable: false })
-  @IsNotEmpty()
-  role: string;
+  @Column({ nullable: true })
+  googleId: string;
+
+  @Column({ nullable: true, select: false })
+  accountActivationToken: string;
+
+  @Column({ nullable: true, select: false })
+  accountActivationExpires: Date;
 
   @Column({ nullable: false })
   @CreateDateColumn()
@@ -50,12 +72,20 @@ export class User {
     return bcrypt.compareSync(unencryptedPassword, this.password);
   }
 
-  createAccountActivationToken = function (): string {
+  createAccountActivationToken(): string {
     const activationToken = crypto.randomBytes(32).toString('hex');
-    //this.accountActivationToken = crypto.createHash('sha256').update(activationToken).digest('hex');
-
-    //this.accountActivationExpires = Date.now() + 10 * 60 * 1000;
-
+    this.accountActivationToken = crypto.createHash('sha256').update(activationToken).digest('hex');
+    this.accountActivationExpires = new Date(Date.now() + 10 * 60 * 1000);
     return activationToken;
-  };
+  }
+
+  toJSON(): UserToClientDto {
+    return {
+      id: this.id,
+      authMethod: this.authMethod,
+      role: this.role,
+      name: this.name,
+      email: this.email
+    };
+  }
 }

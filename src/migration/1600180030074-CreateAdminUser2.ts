@@ -1,12 +1,12 @@
 import { MigrationInterface, QueryRunner, getRepository } from 'typeorm';
 import { User } from '../entity/User';
 
-export class CreateAdminUser1599881896528 implements MigrationInterface {
+export class CreateAdminUser21600180030074 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     const user = new User();
-    user.name = 'admin';
-    user.password = 'admin';
-    user.email = 'admin@admin.com';
+    user.name = 'admin2';
+    user.password = 'admin2';
+    user.email = 'admin2@admin.com';
     user.role = 'admin';
     user.active = true;
     user.hashPassword();
@@ -14,6 +14,5 @@ export class CreateAdminUser1599881896528 implements MigrationInterface {
     await userRepository.save(user);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async down(queryRunner: QueryRunner): Promise<void> {}
 }

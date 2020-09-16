@@ -1,5 +1,5 @@
 export interface ISignUpUser {
-  username: string;
+  name: string;
   email: string;
   role: string;
   activationToken: string;

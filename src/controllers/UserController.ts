@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import { validate } from 'class-validator';
-import authService from '../services/authService';
 import userService from '../services/userService';
 
 import { User } from '../entity/User';
@@ -24,18 +23,18 @@ class UserController {
     const userRepository = getRepository(User);
     try {
       await userRepository.findOneOrFail(id, {
-        select: ['id', 'username', 'role'] //We dont want to send the password on response
+        select: ['id', 'name', 'role'] //We dont want to send the password on response
       });
     } catch (error) {
       res.status(404).send('User not found');
     }
   };
 
-  /*  static newUser = async (req: Request, res: Response): Promise<void> => {
+  static newUser = async (req: Request, res: Response): Promise<void> => {
     //Get parameters from the body
     const { username, password, role } = req.body;
     const user = new User();
-    user.username = username;
+    user.name = username;
     user.password = password;
     user.role = role;
 
@@ -60,20 +59,6 @@ class UserController {
 
     //If all ok, send 201 response
     res.status(201).send('User created');
-  }; */
-
-  static newUser = async (req: Request, res: Response): Promise<void> => {
-    const user = await authService.localSignup(req.body);
-    await userService.sendActivationToken(user);
-    res.status(201).json({
-      status: 'Successfull',
-      message: 'User created',
-      data: {
-        username: user.username,
-        email: user.email,
-        role: user.role
-      }
-    });
   };
 
   static editUser = async (req: Request, res: Response): Promise<void> => {
@@ -95,7 +80,7 @@ class UserController {
     }
 
     //Validate the new values on model
-    user.username = username;
+    user.name = username;
     user.role = role;
     const errors = await validate(user);
     if (errors.length > 0) {

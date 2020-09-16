@@ -6,27 +6,41 @@ import { validate } from 'class-validator';
 import { User } from '../entity/User';
 import config from '../config/config';
 import AppError from '../utils/appError';
+import authService from '../services/authService';
+import userService from '../services/userService';
 
 class AuthController {
+  static localSignUp = async (req: Request, res: Response): Promise<void> => {
+    const user = await authService.localSignup(req.body);
+    await userService.sendActivationToken(user);
+    res.status(201).json({
+      status: 'Successfull',
+      message: 'User created',
+      data: {
+        username: user.name,
+        email: user.email,
+        role: user.role
+      }
+    });
+  };
   static login = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     //Check if username and password are set
-    const { username, password } = req.body;
-    if (!(username && password)) {
-      return next(new AppError('Username and Password must be present', 400));
+    const { name, password } = req.body;
+    if (!(name && password)) {
+      return next(new AppError('Name and Password must be present', 400));
     }
-
+    console.log(req.body);
     //Get user from database
     const userRepository = getRepository(User);
-    const user = await userRepository.findOneOrFail({ where: { username } });
-
+    const user = await userRepository.findOneOrFail({ where: { name } });
     //Check if encrypted password match
     if (!user || !user.checkIfUnencryptedPasswordIsValid(password)) {
-      return next(new AppError('Incorrect username or password.', 401));
+      return next(new AppError('Incorrect name or password.', 401));
     }
 
     //Sing JWT, valid for 1 hour
-    const token = jwt.sign({ userId: user.id, username: user.username }, config.jwtSecret, { expiresIn: '1h' });
-
+    const token = jwt.sign({ userId: user.id, username: user.name }, config.jwtSecret, { expiresIn: '1h' });
+    console.log(token);
     //Send the jwt in the response
     res.send(token);
   };

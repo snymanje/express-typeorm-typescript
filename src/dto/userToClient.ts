@@ -1,17 +1,20 @@
 import { IsString } from 'class-validator';
 
-class CreateUserDto {
+class UserToClientDto {
   @IsString()
-  public name: string;
+  public id: number;
 
   @IsString()
-  public password: string;
+  public authMethod: string;
 
   @IsString()
   public role: string;
 
   @IsString()
+  public name: string;
+
+  @IsString()
   public email: string;
 }
 
-export default CreateUserDto;
+export default UserToClientDto;
