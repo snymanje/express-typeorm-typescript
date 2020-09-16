@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import config from '../config/config';
+import config from '../../config/config';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 interface MailOptions {

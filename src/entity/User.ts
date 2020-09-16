@@ -79,7 +79,7 @@ export class User {
     return activationToken;
   }
 
-  toJSON(): UserToClientDto {
+  toClient(): UserToClientDto {
     return {
       id: this.id,
       authMethod: this.authMethod,

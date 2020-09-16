@@ -7,12 +7,12 @@ import { User } from '../entity/User';
 import config from '../config/config';
 import AppError from '../utils/appError';
 import authService from '../services/authService';
-import userService from '../services/userService';
+import emailService from '../services/emailService';
 
 class AuthController {
   static localSignUp = async (req: Request, res: Response): Promise<void> => {
     const user = await authService.localSignup(req.body);
-    await userService.sendActivationToken(user);
+    await emailService.sendActivationToken(user);
     res.status(201).json({
       status: 'Successfull',
       message: 'User created',
@@ -38,9 +38,8 @@ class AuthController {
       return next(new AppError('Incorrect name or password.', 401));
     }
 
-    //Sing JWT, valid for 1 hour
+    //JWT, valid for 1 hour
     const token = jwt.sign({ userId: user.id, username: user.name }, config.jwtSecret, { expiresIn: '1h' });
-    console.log(token);
     //Send the jwt in the response
     res.send(token);
   };

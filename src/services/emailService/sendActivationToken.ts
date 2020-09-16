@@ -1,4 +1,4 @@
-import sendMail from '../../utils/sendEmail';
+import sendMail from './sendEmail';
 import config from '../../config/config';
 import AppError from '../../utils/appError';
 import { ISignUpUser } from '../../interfaces/user.interfaces';
