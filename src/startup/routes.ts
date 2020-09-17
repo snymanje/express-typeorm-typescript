@@ -34,7 +34,7 @@ export default (app: Application): void => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
 
-  app.use('/', routes);
+  app.use('/api/v1/', routes);
   app.all('*', (req: Request, res: Response, next: NextFunction) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!!!`, 404));
   });

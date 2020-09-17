@@ -1,11 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
-import * as jwt from 'jsonwebtoken';
+import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import { validate } from 'class-validator';
 
 import { User } from '../entity/User';
-import config from '../config/config';
-import AppError from '../utils/appError';
 import authService from '../services/authService';
 import emailService from '../services/emailService';
 
@@ -28,25 +25,14 @@ class AuthController {
     });
   };
 
-  static login = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    //Check if username and password are set
-    const { name, password } = req.body;
-    if (!(name && password)) {
-      return next(new AppError('Name and Password must be present', 400));
-    }
-    console.log(req.body);
-    //Get user from database
-    const userRepository = getRepository(User);
-    const user = await userRepository.findOneOrFail({ where: { name } });
-    //Check if encrypted password match
-    if (!user || !user.checkIfUnencryptedPasswordIsValid(password)) {
-      return next(new AppError('Incorrect name or password.', 401));
-    }
-
-    //JWT, valid for 1 hour
-    const token = jwt.sign({ userId: user.id, username: user.name }, config.jwtSecret, { expiresIn: '1h' });
-    //Send the jwt in the response
-    res.send(token);
+  static localLogin = async (req: Request, res: Response): Promise<void> => {
+    const user = await authService.localLogin(req.body);
+    const tokens = await authService.generateTokens(user);
+    await authService.setAuthCookies(res, tokens);
+    res.status(200).json({
+      status: 'Successfull',
+      message: `Account activated successfully for ${user.email}`
+    });
   };
 
   static changePassword = async (req: Request, res: Response): Promise<void> => {
