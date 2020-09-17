@@ -82,7 +82,7 @@ class AuthController {
       return;
     }
     //Hash the new password and save
-    user.hashPassword();
+    user.hashLocalPassword();
     userRepository.save(user);
 
     res.status(204).send();

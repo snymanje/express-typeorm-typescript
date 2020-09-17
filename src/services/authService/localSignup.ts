@@ -13,7 +13,6 @@ export default async (payload: CreateUserDto): Promise<ISignUpUser> => {
   user.password = payload.password;
   user.passwordConfirm = payload.passwordConfirm;
   user.email = payload.email;
-  user.role = payload.role;
 
   //Hash the password, to securely store on DB
   await user.hashLocalPassword();
@@ -22,9 +21,7 @@ export default async (payload: CreateUserDto): Promise<ISignUpUser> => {
   const userRepository = await getRepository(User);
   try {
     const newUser = await userRepository.save(user);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { name, email, role } = newUser;
-    return { name, email, role, activationToken };
+    return { ...newUser.toClientUserData(), activationToken };
   } catch (err) {
     throw new AppError(err.message, 400);
   }

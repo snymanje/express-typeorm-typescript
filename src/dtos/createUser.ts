@@ -11,9 +11,6 @@ class CreateUserDto {
   public passwordConfirm: string;
 
   @IsString()
-  public role: string;
-
-  @IsString()
   public email: string;
 }
 
