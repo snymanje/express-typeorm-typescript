@@ -31,7 +31,8 @@ class AuthController {
     await authService.setAuthCookies(res, tokens);
     res.status(200).json({
       status: 'Successfull',
-      message: `Account activated successfully for ${user.email}`
+      message: `${user.email} logged in successfully.`,
+      data: { ...tokens }
     });
   };
 
