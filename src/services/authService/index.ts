@@ -1,8 +1,8 @@
-import localSignup from '../authService/localSignup';
-import localLogin from '../authService/localLogin';
-import activateAccount from '../authService/activateAccount';
-import generateTokens from '../authService/generateTokens';
-import setAuthCookies from '../authService/setAuthCookies';
+import localSignup from './localSignup';
+import localLogin from './localLogin';
+import activateAccount from './activateAccount';
+import generateTokens from './generateTokens';
+import setAuthCookies from './setAuthCookies';
 
 const authService = {
   localSignup,
