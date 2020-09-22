@@ -9,7 +9,7 @@ import compression from 'compression';
 import routes from '../routes/index';
 import AppError from '../utils/appError';
 
-import globalErrorHandler from '../controllers/errorController';
+import globalErrorHandler from '../controllers/errorController/errorController';
 
 export default (app: Application): void => {
   const rateLimiter = rateLimit({
