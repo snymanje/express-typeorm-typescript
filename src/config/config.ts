@@ -10,5 +10,6 @@ export default {
   tokenExpiresIn: process.env.TOKENEXPIRES,
   refreshTokenExpiresIn: process.env.REFRESHTOKENEXPIRES,
   cookieExpires: process.env.COOKIEEXPIRES,
-  refreshCookieExpires: process.env.REFRESHCOOKIEEXPIRES
+  refreshCookieExpires: process.env.REFRESHCOOKIEEXPIRES,
+  googleClientId: process.env.GOOGLECLIENTID
 };

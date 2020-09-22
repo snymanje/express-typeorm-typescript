@@ -12,7 +12,7 @@ import AppError from '../utils/appError';
 import globalErrorHandler from '../controllers/errorController';
 
 export default (app: Application): void => {
-  rateLimit({
+  const rateLimiter = rateLimit({
     max: 1000,
     windowMs: 60 * 1000,
     message: 'Too many requests from this IP, try again later'
@@ -34,7 +34,7 @@ export default (app: Application): void => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
 
-  app.use('/api/v1/', routes);
+  app.use('/api/v1/', rateLimiter, routes);
   app.all('*', (req: Request, res: Response, next: NextFunction) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!!!`, 404));
   });

@@ -65,7 +65,7 @@ export class User {
   updatedAt: Date;
 
   async hashLocalPassword(): Promise<void> {
-    this.password = await bcrypt.hash(this.password, 12);
+    this.password = await bcrypt.hash(this.password, 18);
     this.passwordConfirm = undefined; // We don't want to persist the confirm pass to DB - only used for validation
   }
 
