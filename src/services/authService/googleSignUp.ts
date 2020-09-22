@@ -33,7 +33,7 @@ export default async (requestBody: CreateGoogleUserDto): Promise<ISignUpUser> =>
   //Hash the password, to securely store on DB
   await newUser.hashLocalPassword();
 
-  const activationToken = newUser.createAccountActivationToken();
+  const activationToken = await newUser.createAccountActivationToken();
   await userRepository.save(newUser);
 
   return { ...newUser.toClientUserData(), activationToken };
