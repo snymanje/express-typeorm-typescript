@@ -27,15 +27,9 @@ export class User {
   name: string;
 
   @Column({ nullable: true })
-  @Length(8, 100, {
-    message: 'Password must have a minimum of 8 character, please.'
-  })
   password: string;
 
   @Column({ nullable: true })
-  @Length(8, 100, {
-    message: 'Password must have a minimum of 8 character, please.'
-  })
   passwordConfirm: string;
 
   @Column({ nullable: false })
