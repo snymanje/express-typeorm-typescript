@@ -9,6 +9,7 @@ export default async (requestBody: CreateUserDto): Promise<ISignUpUser> => {
   if (requestBody.password != requestBody.passwordConfirm)
     throw new AppError('Password and Confirm Password do not match.', 400);
   const user = new User();
+  user.authMethod = 'google';
   user.name = requestBody.name;
   user.password = requestBody.password;
   user.passwordConfirm = requestBody.passwordConfirm;

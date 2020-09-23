@@ -3,10 +3,9 @@ import config from '../../config/config';
 
 export default async (access_token: string): Promise<TokenPayload> => {
   const CLIENT_ID = config.googleClientId;
+  const CLIENT_SECRET = config.googleClientSecret;
 
-  const client = new OAuth2Client(CLIENT_ID);
-  console.log(client);
-  console.log(access_token);
+  const client = new OAuth2Client(CLIENT_ID, CLIENT_SECRET);
 
   // Verify the token. OAuth2Client throws an Error if verification fails
   const ticket = await client.verifyIdToken({
@@ -14,6 +13,7 @@ export default async (access_token: string): Promise<TokenPayload> => {
     audience: CLIENT_ID
   });
 
+  //console.log(ticket);
   const payload = ticket.getPayload();
 
   return payload;
