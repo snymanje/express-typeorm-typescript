@@ -53,4 +53,19 @@ router.post('/googleLogin', [validateRequest(CreateGoogleUserDto)], AuthControll
 router.post('/localSignup', [validateRequest(CreateUserDto)], AuthController.localSignUp);
 router.post('/googleSignup', [validateRequest(CreateGoogleUserDto)], AuthController.googleSignUp);
 
+/**
+ * @swagger
+ * path:
+ *  /auth/logout:
+ *    post:
+ *      summary: Logout user
+ *      tags: [Authentication and Autherization]
+ *      produces:
+ *          - application/json
+ *      responses:
+ *        200:
+ *          description: User logged out successfully
+ */
+router.post('/logout', AuthController.logout);
+
 export default router;

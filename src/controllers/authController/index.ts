@@ -3,13 +3,15 @@ import googleSignUp from './googleSignUp';
 import localLogin from './localLogin';
 import googleLogin from './googleLogin';
 import activateAccount from './activateAccount';
+import logout from './logout';
 
 const authController = {
   localSignUp,
   googleSignUp,
   localLogin,
   googleLogin,
-  activateAccount
+  activateAccount,
+  logout
 };
 
 export default authController;
