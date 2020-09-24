@@ -17,11 +17,11 @@ const sendMail = async (option: MailOptions): Promise<void> => {
   };
 
   const transporter = nodemailer.createTransport({
-    host: process.env.EMAILHOST,
-    port: parseInt(process.env.EMAILPORT),
+    host: config.emailHost,
+    port: parseInt(config.emailPort),
     auth: {
-      user: process.env.EMAILUSER,
-      pass: process.env.EMAILPASSWORD
+      user: config.emailUser,
+      pass: config.emailPassword
     }
   });
 

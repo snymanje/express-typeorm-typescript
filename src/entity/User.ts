@@ -4,6 +4,26 @@ import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import UserToClientDto from '../dtos/userToClient';
 
+/**
+ * @swagger
+ *  components:
+ *    schemas:
+ *      User:
+ *        type: object
+ *        required:
+ *          - name
+ *          - email
+ *        properties:
+ *          name:
+ *            type: string
+ *          email:
+ *            type: string
+ *            format: email
+ *            description: Email for the user must to be unique.
+ *        example:
+ *           name: Alexander
+ *           email: fake@email.com
+ */
 @Entity()
 @Unique(['email'])
 export class User {
@@ -59,22 +79,26 @@ export class User {
   updatedAt: Date;
 
   async hashLocalPassword(): Promise<void> {
-    this.password = await bcrypt.hash(this.password, 18);
+    this.password = await bcrypt.hash(this.password, 12);
     this.passwordConfirm = undefined; // We don't want to persist the confirm pass to DB - only used for validation
   }
 
-  checkIfUnencryptedPasswordIsValid(unencryptedPassword: string): boolean {
-    return bcrypt.compareSync(unencryptedPassword, this.password);
+  async checkIfUnencryptedPasswordIsValid(unencryptedPassword: string): Promise<boolean> {
+    return bcrypt.compare(unencryptedPassword, this.password);
   }
 
-  createAccountActivationToken(): string {
-    const activationToken = crypto.randomBytes(32).toString('hex');
+  async createAccountActivationToken(): Promise<string> {
+    const activationToken = await crypto.randomBytes(32).toString('hex');
     this.accountActivationToken = crypto.createHash('sha256').update(activationToken).digest('hex');
     this.accountActivationExpires = new Date(Date.now() + 10 * 60 * 1000);
     return activationToken;
   }
 
-  toClientUserData(): UserToClientDto {
+  async isVerified(): Promise<boolean> {
+    return this.active;
+  }
+
+  async toClientUserData(): Promise<UserToClientDto> {
     return {
       id: this.id,
       authMethod: this.authMethod,

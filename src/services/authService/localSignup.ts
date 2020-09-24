@@ -21,5 +21,6 @@ export default async (requestBody: CreateUserDto): Promise<ISignUpUser> => {
   const activationToken = await user.createAccountActivationToken();
   const userRepository = await getRepository(User);
   const newUser = await userRepository.save(user);
-  return { ...newUser.toClientUserData(), activationToken };
+  const clientData = await newUser.toClientUserData();
+  return { ...clientData, activationToken };
 };

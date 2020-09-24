@@ -10,13 +10,18 @@ export default async (requestBody: LoginUserDto): Promise<UserToClientDto> => {
   if (!(email && password)) {
     throw new AppError('Email and Password must be present', 400);
   }
+
   //Get user from database
   const userRepository = getRepository(User);
-  const user = await userRepository.findOneOrFail({ where: { email } });
+  const user = await userRepository.findOne({ where: { email } });
+
   //Check if encrypted password match
   if (!user || !user.checkIfUnencryptedPasswordIsValid(password)) {
     throw new AppError('Incorrect name or password.', 401);
   }
 
-  return { ...user.toClientUserData() };
+  if (!user.isVerified())
+    throw new AppError('You have not activated your account yet, or you have a pending password reset.', 403);
+
+  return user.toClientUserData();
 };

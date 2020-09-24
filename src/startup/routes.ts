@@ -8,6 +8,9 @@ import hpp from 'hpp'; // Parameter pollution
 import compression from 'compression';
 import routes from '../routes/index';
 import AppError from '../utils/appError';
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from '../swagger';
 
 import globalErrorHandler from '../controllers/errorController/errorController';
 
@@ -35,6 +38,12 @@ export default (app: Application): void => {
   app.use(bodyParser.urlencoded({ extended: true }));
 
   app.use('/api/v1/', rateLimiter, routes);
+
+  // Swagger set up
+  const specs = swaggerJsdoc(swaggerDocument);
+
+  app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
+
   app.all('*', (req: Request, res: Response, next: NextFunction) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!!!`, 404));
   });

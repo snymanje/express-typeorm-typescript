@@ -23,5 +23,5 @@ export default async (requestBody: CreateGoogleUserDto): Promise<UserToClientDto
   if (existingUser && !existingUser.active)
     throw new AppError('You already have an account that is not activated yet', 403);
 
-  return { ...existingUser.toClientUserData() };
+  return existingUser.toClientUserData();
 };

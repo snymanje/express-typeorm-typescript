@@ -33,5 +33,6 @@ export default async (requestBody: CreateGoogleUserDto): Promise<ISignUpUser> =>
   const activationToken = await newUser.createAccountActivationToken();
   await userRepository.save(newUser);
 
-  return { ...newUser.toClientUserData(), activationToken };
+  const clientData = await newUser.toClientUserData();
+  return { ...clientData, activationToken };
 };
