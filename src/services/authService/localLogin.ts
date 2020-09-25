@@ -15,8 +15,8 @@ export default async (requestBody: LoginUserDto): Promise<UserToClient> => {
   const userRepository = getRepository(User);
   const user = await userRepository.findOne({ where: { email } });
 
-  //Check if encrypted password match
-  if (!user || !user.checkIfUnencryptedPasswordIsValid(password)) {
+  // If password and encrypted password do not match
+  if (!user || !(await user.checkIfUnencryptedPasswordIsValid(password))) {
     throw new AppError('Incorrect name or password.', 401);
   }
 

@@ -1,3 +1,4 @@
+import { checkJwt } from './../middlewares/checkJwt';
 import { Router } from 'express';
 import AuthController from '../controllers/authController';
 //import { checkJwt } from '../middlewares/checkJwt';
@@ -110,5 +111,32 @@ router.post('/refreshToken', extractRefreshToken, AuthController.refreshToken);
  *          description: Password Reset email sent!
  */
 router.post('/forgotPassword', AuthController.forgotPassword);
+
+/**
+ * @swagger
+ * path:
+ *  /auth/resetPassword:
+ *    post:
+ *      summary: Reset password with reset token sent via email
+ *      tags: [Authentication and Autherization]
+ *      produces:
+ *          - application/json
+ *      parameters:
+ *          - name: Auth Token
+ *            description: Authentication Token
+ *            in: path
+ *            required: false
+ *            type: string
+ *      requestBody:
+ *         content:
+ *           'application/json':
+ *             schema:
+ *               $ref: '#/components/schemas/ResetPassword DTO'
+ *         required: true
+ *      responses:
+ *        200:
+ *          description: Password Reset successfully!
+ */
+router.post('/resetPassword/:resetToken', AuthController.resetPassword);
 
 export default router;
