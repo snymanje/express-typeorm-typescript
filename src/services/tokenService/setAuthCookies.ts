@@ -1,8 +1,8 @@
-import { IToken } from '../../interfaces/user.interfaces';
+import Tokens from '../../dtos/Tokens';
 import { Response } from 'express';
 import config from '../../config/config';
 
-export default async (res: Response, tokens: IToken): Promise<void> => {
+export default async (res: Response, tokens: Tokens): Promise<void> => {
   const refreshtokenArray = tokens.refresh_token.split('.');
   const [refreshTokenHeader, refreshTokenPayload, refreshTokenSignature] = refreshtokenArray;
 

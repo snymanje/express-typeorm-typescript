@@ -2,9 +2,9 @@ import AppError from '../../utils/appError';
 import crypto from 'crypto';
 import { User } from '../../entity/User';
 import { getRepository, MoreThan } from 'typeorm';
-import UserToClient from '../../dtos/UserToClient';
+import { IUser } from '../../interfaces/user.interfaces';
 
-export default async (activationToken: string): Promise<UserToClient> => {
+export default async (activationToken: string): Promise<IUser> => {
   if (!activationToken) throw new AppError('No Activation token found', 400);
 
   const hashedToken = crypto.createHash('sha256').update(activationToken).digest('hex');

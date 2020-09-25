@@ -1,3 +1,5 @@
+import { Request } from 'express';
+
 export interface IUser {
   id: number;
   authMethod: string;
@@ -6,23 +8,14 @@ export interface IUser {
   email: string;
 }
 
-export interface ISignUpUser {
-  name: string;
-  email: string;
-  role: string;
+export interface IUserWithActivationToken extends IUser {
   activationToken: string;
 }
 
-export interface IToken {
-  access_token: string;
-  refresh_token: string;
+export interface IUserWithPwdResetToken extends IUser {
+  resetToken: string;
 }
 
-export interface IUserWithPwdResetToken {
-  id: number;
-  authMethod: string;
-  role: string;
-  name: string;
-  email: string;
-  resetToken: string;
+export interface RequestWithUser extends Request {
+  user: IUser;
 }

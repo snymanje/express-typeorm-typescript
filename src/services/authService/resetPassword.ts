@@ -2,10 +2,10 @@ import { User } from '../../entity/User';
 import { getRepository, MoreThan } from 'typeorm';
 import crypto from 'crypto';
 import AppError from '../../utils/appError';
-import UserToClient from '../../dtos/UserToClient';
+import { IUser } from '../../interfaces/user.interfaces';
 import ResetPassword from '../../dtos/resetPassword';
 
-export default async (requestBody: ResetPassword, resetToken: string): Promise<UserToClient> => {
+export default async (requestBody: ResetPassword, resetToken: string): Promise<IUser> => {
   const { password, passwordConfirm } = requestBody;
 
   if (password != passwordConfirm) throw new AppError('Password and Confirm Password do not match.', 400);

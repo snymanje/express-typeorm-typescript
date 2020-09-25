@@ -2,10 +2,10 @@ import { User } from '../../entity/User';
 import { getRepository } from 'typeorm';
 import AppError from '../../utils/appError';
 import CreateGoogleUser from '../../dtos/CreateGoogleUser';
-import UserToClient from '../../dtos/UserToClient';
+import { IUser } from '../../interfaces/user.interfaces';
 import authService from '../authService';
 
-export default async (requestBody: CreateGoogleUser): Promise<UserToClient> => {
+export default async (requestBody: CreateGoogleUser): Promise<IUser> => {
   const { access_token } = requestBody;
 
   if (!access_token) throw new AppError('The google access token was not provided.', 400);
