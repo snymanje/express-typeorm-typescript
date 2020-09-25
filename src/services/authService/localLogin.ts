@@ -1,4 +1,4 @@
-import LoginUserDto from '../../dtos/LoginLocalUser';
+import LoginUserDto from '../../dtos/LoginLocalUserDto';
 import AppError from '../../utils/appError';
 import { getRepository } from 'typeorm';
 import { User } from '../../entity/User';

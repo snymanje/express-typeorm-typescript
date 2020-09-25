@@ -2,7 +2,7 @@ import { User } from '../../entity/User';
 import { getRepository } from 'typeorm';
 import AppError from '../../utils/appError';
 import { IUserWithActivationToken } from '../../interfaces/user.interfaces';
-import CreateGoogleUser from '../../dtos/CreateGoogleUser';
+import CreateGoogleUser from '../../dtos/CreateGoogleUserDto';
 import authService from '../authService';
 
 export default async (requestBody: CreateGoogleUser): Promise<IUserWithActivationToken> => {

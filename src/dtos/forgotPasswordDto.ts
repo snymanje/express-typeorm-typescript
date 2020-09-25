@@ -4,7 +4,7 @@ import { IsString } from 'class-validator';
  * @swagger
  *  components:
  *    schemas:
- *      Email DTO:
+ *      forgotPassword DTO:
  *        type: object
  *        required:
  *          - email
@@ -15,9 +15,9 @@ import { IsString } from 'class-validator';
  *        example:
  *           email: fake@email.com
  */
-class Email {
+class forgotPassword {
   @IsString()
   public email: string;
 }
 
-export default Email;
+export default forgotPassword;

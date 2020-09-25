@@ -1,7 +1,7 @@
 import { User } from '../../entity/User';
 import { getRepository } from 'typeorm';
 import AppError from '../../utils/appError';
-import CreateGoogleUser from '../../dtos/CreateGoogleUser';
+import CreateGoogleUser from '../../dtos/CreateGoogleUserDto';
 import { IUser } from '../../interfaces/user.interfaces';
 import authService from '../authService';
 

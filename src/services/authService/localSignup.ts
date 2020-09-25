@@ -2,7 +2,7 @@ import { User } from '../../entity/User';
 import { getRepository } from 'typeorm';
 import AppError from '../../utils/appError';
 import { IUserWithActivationToken } from '../../interfaces/user.interfaces';
-import CreateUser from '../../dtos/CreateLocalUser';
+import CreateUser from '../../dtos/CreateLocalUserDto';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default async (requestBody: CreateUser): Promise<IUserWithActivationToken> => {

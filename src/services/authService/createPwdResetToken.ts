@@ -1,10 +1,9 @@
 import { User } from '../../entity/User';
 import { getRepository } from 'typeorm';
 import AppError from '../../utils/appError';
-import Email from '../../dtos/Email';
-import { IUserWithPwdResetToken } from '../../interfaces/user.interfaces';
+import { IUserWithPwdResetToken, IUserEmail } from '../../interfaces/user.interfaces';
 
-export default async (requestBody: Email): Promise<IUserWithPwdResetToken> => {
+export default async (requestBody: IUserEmail): Promise<IUserWithPwdResetToken> => {
   const { email } = requestBody;
   // check if the current user exists in the DB
   const userRepository = await getRepository(User);

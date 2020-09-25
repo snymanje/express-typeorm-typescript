@@ -1,3 +1,4 @@
+import { PrimaryGeneratedColumn } from 'typeorm';
 import { Request } from 'express';
 
 export interface IUser {
@@ -5,6 +6,10 @@ export interface IUser {
   authMethod: string;
   role: string;
   name: string;
+  email: string;
+}
+
+export interface IUserEmail {
   email: string;
 }
 
@@ -18,4 +23,9 @@ export interface IUserWithPwdResetToken extends IUser {
 
 export interface RequestWithUser extends Request {
   user: IUser;
+}
+
+export interface ITokens {
+  access_token: string;
+  refresh_token: string;
 }

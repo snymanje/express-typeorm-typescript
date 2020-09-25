@@ -1,9 +1,8 @@
-import { IUser } from '../../interfaces/user.interfaces';
+import { ITokens, IUser } from '../../interfaces/user.interfaces';
 import jwt from 'jsonwebtoken';
 import config from '../../config/config';
-import Tokens from '../../dtos/Tokens';
 
-export default async (user: IUser): Promise<Tokens> => {
+export default async (user: IUser): Promise<ITokens> => {
   const { id } = user;
   const access_token = await jwt.sign({ id }, config.tokenSecret, {
     expiresIn: config.tokenExpiresIn

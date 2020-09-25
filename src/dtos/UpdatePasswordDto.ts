@@ -4,16 +4,16 @@ import { IsString } from 'class-validator';
  * @swagger
  *  components:
  *    schemas:
- *      ResetPassword DTO:
+ *      UpdatePassword DTO:
  *        type: object
  *        required:
- *          - email
+ *          - passwordCurrent
  *          - password
  *          - passwordConfirm
  *        properties:
- *          email:
+ *          passwordCurrent:
  *            type: string
- *            format: email
+ *            format: password
  *          password:
  *            type: string
  *            format: password
@@ -21,19 +21,19 @@ import { IsString } from 'class-validator';
  *            type: string
  *            format: password
  *        example:
- *           email: fake@email.com
+ *           passwordCurrent: 1234567895
  *           password: 123456
  *           passwordConfirm: 123456
  */
-class ResetPassword {
-  @IsString()
-  public email: string;
-
+class updatePasswordDto {
   @IsString()
   public password: string;
 
   @IsString()
   public passwordConfirm: string;
+
+  @IsString()
+  public passwordCurrent: string;
 }
 
-export default ResetPassword;
+export default updatePasswordDto;

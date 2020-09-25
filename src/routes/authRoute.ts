@@ -3,10 +3,14 @@ import { Router } from 'express';
 import AuthController from '../controllers/authController';
 //import { checkJwt } from '../middlewares/checkJwt';
 import validateRequest from '../middlewares/validate';
-import CreateUserDto from '../dtos/CreateLocalUser';
-import loginUserDto from '../dtos/LoginLocalUser';
-import CreateGoogleUserDto from '../dtos/CreateGoogleUser';
+import CreateUserDto from '../dtos/CreateLocalUserDto';
+import loginUserDto from '../dtos/LoginLocalUserDto';
+import EmptyDto from '../dtos/EmptyDto';
+import forgotPasswordDto from '../dtos/forgotPasswordDto';
+import CreateGoogleUserDto from '../dtos/CreateGoogleUserDto';
 import { extractRefreshToken } from '../middlewares/extractRefreshToken';
+import resetPasswordDto from '../dtos/ResetPasswordDto';
+import updatePasswordDto from '../dtos/UpdatePasswordDto';
 
 const router = Router();
 
@@ -29,7 +33,7 @@ const router = Router();
  *        200:
  *          description: Account successfully activated.
  */
-router.post('/activate/:activationToken', AuthController.activateAccount);
+router.post('/activate/:activationToken', validateRequest(EmptyDto), AuthController.activateAccount);
 
 /**
  * @swagger
@@ -89,7 +93,7 @@ router.post('/logout', AuthController.logout);
  *        200:
  *          description: Reissued access token
  */
-router.post('/refreshToken', extractRefreshToken, AuthController.refreshToken);
+router.post('/refreshToken', validateRequest(EmptyDto), extractRefreshToken, AuthController.refreshToken);
 
 /**
  * @swagger
@@ -110,7 +114,7 @@ router.post('/refreshToken', extractRefreshToken, AuthController.refreshToken);
  *        200:
  *          description: Password Reset email sent!
  */
-router.post('/forgotPassword', AuthController.forgotPassword);
+router.post('/forgotPassword', validateRequest(forgotPasswordDto), AuthController.forgotPassword);
 
 /**
  * @swagger
@@ -137,8 +141,8 @@ router.post('/forgotPassword', AuthController.forgotPassword);
  *        200:
  *          description: Password Reset successfully!
  */
-router.post('/resetPassword/:resetToken', AuthController.resetPassword);
+router.post('/resetPassword/:resetToken', validateRequest(resetPasswordDto), AuthController.resetPassword);
 
-router.post('/updatePassword', checkJwt, AuthController.updatePassword);
+router.post('/updatePassword', validateRequest(updatePasswordDto), checkJwt, AuthController.updatePassword);
 
 export default router;
