@@ -1,4 +1,4 @@
-import { IToken } from './../../interfaces/user.interfaces';
+import { IToken } from '../../interfaces/user.interfaces';
 import { Response } from 'express';
 import config from '../../config/config';
 

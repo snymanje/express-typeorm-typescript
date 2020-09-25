@@ -74,6 +74,9 @@ export class User {
   @CreateDateColumn()
   createdAt: Date;
 
+  @Column({ nullable: true })
+  passwordChangedAt: Date;
+
   @Column({ nullable: false })
   @UpdateDateColumn()
   updatedAt: Date;
@@ -92,6 +95,13 @@ export class User {
     this.accountActivationToken = crypto.createHash('sha256').update(activationToken).digest('hex');
     this.accountActivationExpires = new Date(Date.now() + 10 * 60 * 1000);
     return activationToken;
+  }
+
+  async changedPasswordAfter(JWTTimestamp: number): Promise<boolean> {
+    if (this.passwordChangedAt) {
+      const changedTimestamp = Number((this.passwordChangedAt.getTime() / 1000, 10));
+      return JWTTimestamp < changedTimestamp;
+    }
   }
 
   async isVerified(): Promise<boolean> {

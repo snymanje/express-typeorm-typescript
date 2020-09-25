@@ -5,6 +5,7 @@ import validateRequest from '../middlewares/validate';
 import CreateUserDto from '../dtos/createUser';
 import loginUserDto from '../dtos/loginUser';
 import CreateGoogleUserDto from '../dtos/CreateGoogleUserDto';
+import { extractRefreshToken } from '../middlewares/extractTokens';
 
 const router = Router();
 
@@ -67,5 +68,26 @@ router.post('/googleSignup', [validateRequest(CreateGoogleUserDto)], AuthControl
  *          description: User logged out successfully
  */
 router.post('/logout', AuthController.logout);
+
+/**
+ * @swagger
+ * path:
+ *  /auth/refreshToken:
+ *    post:
+ *      summary: Use the refresh token to obtain a new access token when the access token has expired
+ *      tags: [Authentication and Autherization]
+ *      produces:
+ *          - application/json
+ *      parameters:
+ *          - name: refresh-token
+ *            description: Authentication Token
+ *            in: header
+ *            required: false
+ *            type: string
+ *      responses:
+ *        200:
+ *          description: Reissued access token
+ */
+router.post('/refreshToken', extractRefreshToken, AuthController.refreshToken);
 
 export default router;

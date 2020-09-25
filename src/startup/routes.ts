@@ -41,7 +41,6 @@ export default (app: Application): void => {
 
   // Swagger set up
   const specs = swaggerJsdoc(swaggerDocument);
-
   app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
 
   app.all('*', (req: Request, res: Response, next: NextFunction) => {
