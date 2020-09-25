@@ -139,4 +139,6 @@ router.post('/forgotPassword', AuthController.forgotPassword);
  */
 router.post('/resetPassword/:resetToken', AuthController.resetPassword);
 
+router.post('/updatePassword', checkJwt, AuthController.updatePassword);
+
 export default router;

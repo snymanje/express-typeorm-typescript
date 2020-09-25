@@ -6,6 +6,7 @@ import activateAccount from './activateAccount';
 import getGoogleUser from './getGoogleUser';
 import createPwdResetToken from './createPwdResetToken';
 import resetPassword from './resetPassword';
+import updatePassword from './updatePassword';
 
 const authService = {
   localSignup,
@@ -15,7 +16,8 @@ const authService = {
   activateAccount,
   getGoogleUser,
   createPwdResetToken,
-  resetPassword
+  resetPassword,
+  updatePassword
 };
 
 export default authService;

@@ -1,30 +1,33 @@
 import { Request, Response, NextFunction } from 'express';
-import * as jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
+import AppError from '../utils/appError';
+import { promisify } from 'util';
 import config from '../config/config';
 
-export const checkJwt = (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  //Get the jwt token from the head
-  const token = <string>req.headers['auth'];
-  let jwtPayload;
+export const checkJwt = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  // check for a token
+  let token;
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.token) {
+    token = req.cookies.token;
+  }
+
+  if (!token) {
+    next(new AppError('You are not logged in', 401));
+  }
 
   //Try to validate the token and get data
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    jwtPayload = <any>jwt.verify(token, config.tokenSecret);
-    res.locals.jwtPayload = jwtPayload;
-  } catch (error) {
-    //If token is not valid, respond with 401 (unauthorized)
-    res.status(401).send();
-    return;
-  }
+  const jwtPayload = await promisify(jwt.verify)(token, config.tokenSecret);
+  res.locals.jwtPayload = jwtPayload;
 
   //The token is valid for 1 hour
   //We want to send a new token on every request
-  const { userId, username } = jwtPayload;
+  /*  const { userId, username } = jwtPayload;
   const newToken = jwt.sign({ userId, username }, config.tokenSecret, {
     expiresIn: '1h'
   });
-  res.setHeader('token', newToken);
+  res.setHeader('token', newToken); */
 
   //Call the next middleware or controller
   next();

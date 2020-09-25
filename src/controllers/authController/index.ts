@@ -7,6 +7,7 @@ import logout from './logout';
 import refreshToken from './refreshToken';
 import forgotPassword from './forgotPassword';
 import resetPassword from './resetPassword';
+import updatePassword from './updatePassword';
 
 const authController = {
   localSignUp,
@@ -17,7 +18,8 @@ const authController = {
   logout,
   refreshToken,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  updatePassword
 };
 
 export default authController;

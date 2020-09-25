@@ -5,8 +5,8 @@ import AppError from '../../utils/appError';
 import UserToClient from '../../dtos/UserToClient';
 import ResetPassword from '../../dtos/resetPassword';
 
-export default async (requestPayload: ResetPassword, resetToken: string): Promise<UserToClient> => {
-  const { password, passwordConfirm } = requestPayload;
+export default async (requestBody: ResetPassword, resetToken: string): Promise<UserToClient> => {
+  const { password, passwordConfirm } = requestBody;
 
   if (password != passwordConfirm) throw new AppError('Password and Confirm Password do not match.', 400);
 
