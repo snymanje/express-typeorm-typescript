@@ -2,13 +2,13 @@ import { Entity, PrimaryGeneratedColumn, Column, Unique, CreateDateColumn, Updat
 import { Length, IsNotEmpty, IsEmail } from 'class-validator';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
-import UserToClientDto from '../dtos/userToClient';
+import UserToClient from '../dtos/UserToClient';
 
 /**
  * @swagger
  *  components:
  *    schemas:
- *      User:
+ *      User Model:
  *        type: object
  *        required:
  *          - name
@@ -64,11 +64,17 @@ export class User {
   @Column({ nullable: true })
   googleId: string;
 
-  @Column({ nullable: true, select: false })
+  @Column({ nullable: true })
   accountActivationToken: string;
 
-  @Column({ nullable: true, select: false })
+  @Column({ nullable: true })
   accountActivationExpires: Date;
+
+  @Column({ nullable: true })
+  passwordResetToken: string;
+
+  @Column({ nullable: true })
+  passwordResetExpires: Date;
 
   @Column({ nullable: false })
   @CreateDateColumn()
@@ -108,7 +114,16 @@ export class User {
     return this.active;
   }
 
-  async toClientUserData(): Promise<UserToClientDto> {
+  async createPasswordResettoken(): Promise<string> {
+    const resetToken = await crypto.randomBytes(32).toString('hex');
+    this.passwordResetToken = await crypto.createHash('sha256').update(resetToken).digest('hex');
+
+    this.passwordResetExpires = new Date(Date.now() + 10 * 60 * 1000);
+
+    return resetToken;
+  }
+
+  async toClientUserData(): Promise<UserToClient> {
     return {
       id: this.id,
       authMethod: this.authMethod,

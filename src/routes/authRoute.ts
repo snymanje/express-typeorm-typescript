@@ -2,10 +2,10 @@ import { Router } from 'express';
 import AuthController from '../controllers/authController';
 //import { checkJwt } from '../middlewares/checkJwt';
 import validateRequest from '../middlewares/validate';
-import CreateUserDto from '../dtos/createUser';
-import loginUserDto from '../dtos/loginUser';
-import CreateGoogleUserDto from '../dtos/CreateGoogleUserDto';
-import { extractRefreshToken } from '../middlewares/extractTokens';
+import CreateUserDto from '../dtos/CreateLocalUser';
+import loginUserDto from '../dtos/LoginLocalUser';
+import CreateGoogleUserDto from '../dtos/CreateGoogleUser';
+import { extractRefreshToken } from '../middlewares/extractRefreshToken';
 
 const router = Router();
 
@@ -89,5 +89,26 @@ router.post('/logout', AuthController.logout);
  *          description: Reissued access token
  */
 router.post('/refreshToken', extractRefreshToken, AuthController.refreshToken);
+
+/**
+ * @swagger
+ * path:
+ *  /auth/forgotPassword:
+ *    post:
+ *      summary: Reset password with reset token sent via email
+ *      tags: [Authentication and Autherization]
+ *      produces:
+ *          - application/json
+ *      requestBody:
+ *         content:
+ *           'application/json':
+ *             schema:
+ *               $ref: '#/components/schemas/Email DTO'
+ *         required: true
+ *      responses:
+ *        200:
+ *          description: Password Reset email sent!
+ */
+router.post('/forgotPassword', AuthController.forgotPassword);
 
 export default router;

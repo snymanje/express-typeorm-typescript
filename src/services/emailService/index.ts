@@ -1,7 +1,9 @@
 import sendActivationToken from '../emailService/sendActivationToken';
+import sendForgotPwdEmail from './sendForgotPwdEmail';
 
 const emailService = {
-  sendActivationToken
+  sendActivationToken,
+  sendForgotPwdEmail
 };
 
 export default emailService;

@@ -5,6 +5,7 @@ import googleLogin from './googleLogin';
 import activateAccount from './activateAccount';
 import logout from './logout';
 import refreshToken from './refreshToken';
+import forgotPassword from './forgotPassword';
 
 const authController = {
   localSignUp,
@@ -13,7 +14,8 @@ const authController = {
   googleLogin,
   activateAccount,
   logout,
-  refreshToken
+  refreshToken,
+  forgotPassword
 };
 
 export default authController;

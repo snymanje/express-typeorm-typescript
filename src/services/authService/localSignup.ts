@@ -2,10 +2,10 @@ import { User } from '../../entity/User';
 import { getRepository } from 'typeorm';
 import AppError from '../../utils/appError';
 import { ISignUpUser } from '../../interfaces/user.interfaces';
-import CreateUserDto from '../../dtos/createUser';
+import CreateUser from '../../dtos/CreateLocalUser';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export default async (requestBody: CreateUserDto): Promise<ISignUpUser> => {
+export default async (requestBody: CreateUser): Promise<ISignUpUser> => {
   if (requestBody.password != requestBody.passwordConfirm)
     throw new AppError('Password and Confirm Password do not match.', 400);
   const user = new User();

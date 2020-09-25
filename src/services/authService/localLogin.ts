@@ -1,10 +1,10 @@
-import LoginUserDto from '../../dtos/loginUser';
+import LoginUserDto from '../../dtos/LoginLocalUser';
 import AppError from '../../utils/appError';
 import { getRepository } from 'typeorm';
 import { User } from '../../entity/User';
-import UserToClientDto from '../../dtos/userToClient';
+import UserToClient from '../../dtos/UserToClient';
 
-export default async (requestBody: LoginUserDto): Promise<UserToClientDto> => {
+export default async (requestBody: LoginUserDto): Promise<UserToClient> => {
   //Check if username and password are set
   const { email, password } = requestBody;
   if (!(email && password)) {
