@@ -10,7 +10,7 @@ import { IsString } from 'class-validator';
  *          - password
  *          - email
  *        properties:
- *          name:
+ *          password:
  *            type: string
  *          email:
  *            type: string
