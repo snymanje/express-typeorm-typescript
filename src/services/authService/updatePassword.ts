@@ -18,7 +18,7 @@ export default async (requestBody: UpdatePasswordDto, id: number): Promise<IUser
   user.password = password;
   user.passwordConfirm = undefined;
 
-  await user.hashLocalPassword();
+  //await user.hashLocalPassword();
 
   await userRepository.save(user);
   return user.toClientUserData();

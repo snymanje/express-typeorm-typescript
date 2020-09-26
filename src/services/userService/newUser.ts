@@ -14,9 +14,6 @@ export default async (requestBody: CreateLocalUserWithRoleDto): Promise<IUser> =
   user.email = email;
   user.role = role;
 
-  //Hash the password, to securely store on DB
-  await user.hashLocalPassword();
-
   //Try to save. If fails, the username is already in use
   const userRepository = getRepository(User);
   await userRepository.save(user);

@@ -1,5 +1,14 @@
 import { IUser } from './../interfaces/user.interfaces';
-import { Entity, PrimaryGeneratedColumn, Column, Unique, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  Unique,
+  CreateDateColumn,
+  UpdateDateColumn,
+  BeforeInsert,
+  BeforeUpdate
+} from 'typeorm';
 import { Length, IsNotEmpty, IsEmail } from 'class-validator';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
@@ -67,9 +76,18 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  async hashLocalPassword(): Promise<void> {
+  /*   async hashLocalPassword(): Promise<void> {
     this.password = await bcrypt.hash(this.password, 12);
     this.passwordConfirm = undefined; // We don't want to persist the confirm pass to DB - only used for validation
+  } */
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  async hashLocalPasswordBeforeInsert(): Promise<void> {
+    //if (this.password && this.passwordConfirm) {
+    this.password = await bcrypt.hash(this.password, 12);
+    this.passwordConfirm = undefined;
+    //}
   }
 
   async checkIfUnencryptedPasswordIsValid(unencryptedPassword: string): Promise<boolean> {

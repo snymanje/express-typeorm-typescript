@@ -15,9 +15,6 @@ export default async (requestBody: CreateUser): Promise<IUserWithActivationToken
   user.passwordConfirm = requestBody.passwordConfirm;
   user.email = requestBody.email;
 
-  //Hash the password, to securely store on DB
-  await user.hashLocalPassword();
-
   const activationToken = await user.createAccountActivationToken();
   const userRepository = await getRepository(User);
   const newUser = await userRepository.save(user);
