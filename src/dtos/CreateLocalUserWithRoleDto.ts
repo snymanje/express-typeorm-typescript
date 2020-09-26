@@ -1,6 +1,6 @@
 import { IsString, Length } from 'class-validator';
 
-class CreateLocalUserDto {
+class CreateLocalUserWithRoleDto {
   @IsString()
   public name: string;
 
@@ -18,6 +18,9 @@ class CreateLocalUserDto {
 
   @IsString()
   public email: string;
+
+  @IsString()
+  public role: string;
 }
 
-export default CreateLocalUserDto;
+export default CreateLocalUserWithRoleDto;

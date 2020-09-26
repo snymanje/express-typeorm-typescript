@@ -15,7 +15,5 @@ export default async (): Promise<IUser[]> => {
     })
   );
 
-  console.log(allUsers);
-
   return allUsers;
 };

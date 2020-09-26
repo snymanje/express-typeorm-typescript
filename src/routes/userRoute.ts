@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import CreateLocalUserWithRoleDto from '../dtos/CreateLocalUserWithRoleDto';
+import validateRequest from '../middlewares/validate';
 import UserController from '../controllers/userController';
 import { checkJwt } from '../middlewares/checkJwt';
 import { checkRole } from '../middlewares/checkRoles';
@@ -15,7 +17,7 @@ const router = Router();
  *      produces:
  *          - application/json
  *      parameters:
- *          - name: authorization
+ *          - name: Authorization
  *            description: Authentication Token
  *            in: header
  *            required: false
@@ -30,10 +32,10 @@ router.get('/', [checkJwt, checkRole(['admin'])], UserController.listAll);
 router.get('/:id([0-9]+)', [checkJwt, checkRole(['admin'])], UserController.getOneById);
 
 //Create a new user
-router.post('/', [checkJwt, checkRole(['admin'])], UserController.newUser);
+router.post('/', validateRequest(CreateLocalUserWithRoleDto), [checkJwt, checkRole(['admin'])], UserController.newUser);
 
-//Edit one user
-router.patch('/:id([0-9]+)', [checkJwt, checkRole(['admin'])], UserController.editUser);
+// Edit one user
+// router.patch('/:id([0-9]+)', [checkJwt, checkRole(['admin'])], UserController.editUser);
 
 //Delete one user
 router.delete('/:id([0-9]+)', [checkJwt, checkRole(['admin'])], UserController.deleteUser);
