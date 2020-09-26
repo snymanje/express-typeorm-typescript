@@ -1,7 +1,9 @@
 import getAllUsers from '../userService/getAllUsers';
-
+import deleteUser from '../userService/deleteUser';
+deleteUser;
 const userService = {
-  getAllUsers
+  getAllUsers,
+  deleteUser
 };
 
 export default userService;

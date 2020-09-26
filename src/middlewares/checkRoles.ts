@@ -1,24 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
-import { getRepository } from 'typeorm';
-
-import { User } from '../entity/User';
+import AppError from '../utils/appError';
 
 export const checkRole = (roles: Array<string>) => {
   return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    //Get the user ID from previous midleware
-    const id = res.locals.jwtPayload.id;
-
-    //Get user role from the database
-    const userRepository = getRepository(User);
-    let user: User;
-    try {
-      user = await userRepository.findOneOrFail(id);
-    } catch (id) {
-      res.status(401).send();
+    if (!roles.includes(res.locals.jwtPayload.role)) {
+      return next(new AppError('You are not autherized to access this data.', 403));
     }
-
-    //Check if array of authorized roles includes the user's role
-    if (roles.indexOf(user.role) > -1) next();
-    else res.status(401).send();
+    next();
   };
 };

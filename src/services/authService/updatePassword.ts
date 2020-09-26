@@ -2,9 +2,9 @@ import { User } from '../../entity/User';
 import { getRepository } from 'typeorm';
 import AppError from '../../utils/appError';
 import { IUser } from '../../interfaces/user.interfaces';
-import UpdatePassword from '../../dtos/updatePassword';
+import UpdatePasswordDto from '../../dtos/updatePasswordDto';
 
-export default async (requestBody: UpdatePassword, id: number): Promise<IUser> => {
+export default async (requestBody: UpdatePasswordDto, id: number): Promise<IUser> => {
   const { password, passwordCurrent, passwordConfirm } = requestBody;
 
   if (password != passwordConfirm) throw new AppError('Password and Confirm Password do not match.', 400);

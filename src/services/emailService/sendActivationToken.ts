@@ -1,9 +1,9 @@
+import { IUserWithActivationToken } from './../../interfaces/user.interfaces';
 import sendMail from './sendEmail';
 import config from '../../config/config';
 import AppError from '../../utils/appError';
-import { ISignUpUser } from '../../interfaces/user.interfaces';
 
-export default async (user: ISignUpUser): Promise<void> => {
+export default async (user: IUserWithActivationToken): Promise<void> => {
   const activateAccountUrl = `http://${config.clientUrl}/activateAccount/${user.activationToken}`;
 
   const message = `<p>

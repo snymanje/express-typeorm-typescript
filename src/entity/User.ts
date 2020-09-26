@@ -1,29 +1,9 @@
+import { IUser } from './../interfaces/user.interfaces';
 import { Entity, PrimaryGeneratedColumn, Column, Unique, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Length, IsNotEmpty, IsEmail } from 'class-validator';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
-import UserToClient from '../dtos/UserToClient';
 
-/**
- * @swagger
- *  components:
- *    schemas:
- *      User Model:
- *        type: object
- *        required:
- *          - name
- *          - email
- *        properties:
- *          name:
- *            type: string
- *          email:
- *            type: string
- *            format: email
- *            description: Email for the user must to be unique.
- *        example:
- *           name: Alexander
- *           email: fake@email.com
- */
 @Entity()
 @Unique(['email'])
 export class User {
@@ -123,7 +103,7 @@ export class User {
     return resetToken;
   }
 
-  async toClientUserData(): Promise<UserToClient> {
+  async toClientUserData(): Promise<IUser> {
     return {
       id: this.id,
       authMethod: this.authMethod,

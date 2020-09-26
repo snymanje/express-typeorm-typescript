@@ -3,12 +3,12 @@ import jwt from 'jsonwebtoken';
 import config from '../../config/config';
 
 export default async (user: IUser): Promise<ITokens> => {
-  const { id } = user;
-  const access_token = await jwt.sign({ id }, config.tokenSecret, {
+  const { id, email, role, authMethod } = user;
+  const access_token = await jwt.sign({ id, email, role, authMethod }, config.tokenSecret, {
     expiresIn: config.tokenExpiresIn
   });
 
-  const refresh_token = await jwt.sign({ id }, config.refreshTokenSecret, {
+  const refresh_token = await jwt.sign({ id, email, role, authMethod }, config.refreshTokenSecret, {
     expiresIn: config.refreshTokenExpiresIn
   });
 

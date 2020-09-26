@@ -5,7 +5,25 @@ import { checkRole } from '../middlewares/checkRoles';
 
 const router = Router();
 
-//Get all users
+/**
+ * @swagger
+ * path:
+ *  /user:
+ *    get:
+ *      summary: Fetches all users
+ *      tags: [User CRUD Operations]
+ *      produces:
+ *          - application/json
+ *      parameters:
+ *          - name: authorization
+ *            description: Authentication Token
+ *            in: header
+ *            required: false
+ *            type: string
+ *      responses:
+ *        200:
+ *          description: All users retreived successfully.
+ */
 router.get('/', [checkJwt, checkRole(['admin'])], UserController.listAll);
 
 // Get one user

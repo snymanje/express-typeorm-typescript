@@ -9,7 +9,7 @@ export default async (requestBody: CreateUser): Promise<IUserWithActivationToken
   if (requestBody.password != requestBody.passwordConfirm)
     throw new AppError('Password and Confirm Password do not match.', 400);
   const user = new User();
-  user.authMethod = 'google';
+  user.authMethod = 'local';
   user.name = requestBody.name;
   user.password = requestBody.password;
   user.passwordConfirm = requestBody.passwordConfirm;

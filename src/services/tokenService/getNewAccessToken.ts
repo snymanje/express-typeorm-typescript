@@ -24,8 +24,8 @@ export default async (refreshToken: string): Promise<string> => {
     }
   }
 
-  const { id } = loggedInUser;
-  const access_token = await jwt.sign({ id }, config.tokenSecret, {
+  const { id, email, role, authMethod } = loggedInUser;
+  const access_token = await jwt.sign({ id, email, role, authMethod }, config.tokenSecret, {
     expiresIn: process.env.TOKENEXPIRES
   });
 
