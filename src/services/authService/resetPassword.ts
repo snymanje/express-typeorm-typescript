@@ -23,11 +23,11 @@ export default async (requestBody: ResetPasswordDto, resetToken: string): Promis
   }
 
   user.password = password;
-  user.passwordConfirm = undefined;
   user.passwordResetToken = undefined;
   user.passwordResetExpires = undefined;
 
-  //await user.hashLocalPassword();
+  await user.hashLocalPassword();
+  await user.setPasswordChangedAt();
 
   await userRepository.save(user);
 

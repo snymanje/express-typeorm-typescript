@@ -38,8 +38,8 @@ export class User {
   @Column({ nullable: true })
   password: string;
 
-  @Column({ nullable: true })
-  passwordConfirm: string;
+  /*   @Column({ nullable: true })
+  passwordConfirm: string; */
 
   @Column({ nullable: false })
   @IsEmail(
@@ -76,18 +76,18 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  /*   async hashLocalPassword(): Promise<void> {
+  async hashLocalPassword(): Promise<void> {
     this.password = await bcrypt.hash(this.password, 12);
-    this.passwordConfirm = undefined; // We don't want to persist the confirm pass to DB - only used for validation
-  } */
+  }
+
+  async setPasswordChangedAt(): Promise<void> {
+    this.passwordChangedAt = new Date(Date.now());
+  }
 
   @BeforeInsert()
-  @BeforeUpdate()
-  async hashLocalPasswordBeforeInsert(): Promise<void> {
-    //if (this.password && this.passwordConfirm) {
+  async hashLocalPasswordBefore(): Promise<void> {
     this.password = await bcrypt.hash(this.password, 12);
-    this.passwordConfirm = undefined;
-    //}
+    this.passwordChangedAt = new Date(Date.now());
   }
 
   async checkIfUnencryptedPasswordIsValid(unencryptedPassword: string): Promise<boolean> {
@@ -109,7 +109,7 @@ export class User {
   }
 
   async isVerified(): Promise<boolean> {
-    return this.active;
+    return this.active && this.passwordResetExpires === undefined;
   }
 
   async createPasswordResettoken(): Promise<string> {

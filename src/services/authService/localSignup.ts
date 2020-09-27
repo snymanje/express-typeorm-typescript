@@ -12,7 +12,6 @@ export default async (requestBody: CreateUser): Promise<IUserWithActivationToken
   user.authMethod = 'local';
   user.name = requestBody.name;
   user.password = requestBody.password;
-  user.passwordConfirm = requestBody.passwordConfirm;
   user.email = requestBody.email;
 
   const activationToken = await user.createAccountActivationToken();

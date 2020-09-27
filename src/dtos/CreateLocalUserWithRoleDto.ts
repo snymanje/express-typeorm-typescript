@@ -1,5 +1,40 @@
 import { IsString, Length } from 'class-validator';
 
+/**
+ * @swagger
+ *  components:
+ *    schemas:
+ *      CreateLocalUserWithRole DTO:
+ *        type: object
+ *        required:
+ *          - name
+ *          - password
+ *          - passwordConfirm
+ *          - email
+ *          - role
+ *        properties:
+ *          name:
+ *            type: string
+ *            format: name
+ *          password:
+ *            type: string
+ *            format: email
+ *          passwordConfirm:
+ *            type: string
+ *            format: email
+ *          email:
+ *            type: string
+ *            format: email
+ *          role:
+ *            type: string
+ *            format: email
+ *        example:
+ *           name: faker
+ *           password: 12345
+ *           passwordConfirm: 12345
+ *           email: fake@email.com
+ *           role: user
+ */
 class CreateLocalUserWithRoleDto {
   @IsString()
   public name: string;

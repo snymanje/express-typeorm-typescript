@@ -12,13 +12,15 @@ export default async (requestBody: UpdatePasswordDto, id: number): Promise<IUser
   const userRepository = await getRepository(User);
   const user = await userRepository.findOne({ id });
 
+  console.log(user);
+  console.log(await user.checkIfUnencryptedPasswordIsValid(passwordCurrent));
   if (!user || !(await user.checkIfUnencryptedPasswordIsValid(passwordCurrent))) {
     throw new AppError('Passwords are not correct', 403);
   }
   user.password = password;
-  user.passwordConfirm = undefined;
 
-  //await user.hashLocalPassword();
+  await user.hashLocalPassword();
+  await user.setPasswordChangedAt();
 
   await userRepository.save(user);
   return user.toClientUserData();
