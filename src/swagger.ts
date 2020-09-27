@@ -14,6 +14,20 @@ export default {
       {
         url: 'http://localhost:5000/api/v1'
       }
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT'
+        }
+      }
+    },
+    security: [
+      {
+        bearerAuth: []
+      }
     ]
   },
   apis: ['**/*.ts']

@@ -67,6 +67,8 @@ router.get('/:id([0-9]+)', [checkJwt, checkRole(['admin'])], UserController.getO
  *      tags: [User CRUD Operations]
  *      produces:
  *          - application/json
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
  *          - name: Authorization
  *            description: Authentication Token
@@ -96,11 +98,12 @@ router.post('/', validateRequest(CreateLocalUserWithRoleDto), [checkJwt, checkRo
  *      produces:
  *          - application/json
  *      parameters:
- *          - name: Authorization
+ *          - name: authorization
  *            description: Authentication Token
  *            in: header
  *            required: false
- *            type: string
+ *            schema:
+ *              type: string
  *      requestBody:
  *         content:
  *           'application/json':
@@ -123,12 +126,9 @@ router.patch('/', validateRequest(EditUserDto), [checkJwt, checkRole(['admin'])]
  *      tags: [User CRUD Operations]
  *      produces:
  *          - application/json
+ *      security:
+ *          - bearerAuth: []
  *      parameters:
- *          - name: Authorization
- *            description: Authentication Token
- *            in: header
- *            required: false
- *            type: string
  *          - name: id
  *            description: User Id
  *            in: path
