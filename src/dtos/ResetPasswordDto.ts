@@ -21,7 +21,7 @@ import { IsEmail, IsString } from 'class-validator';
  *            type: string
  *            format: password
  *        example:
- *           email: fake@email.com
+ *           email: fake@gmail.com
  *           password: 123456
  *           passwordConfirm: 123456
  */

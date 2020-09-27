@@ -22,7 +22,7 @@ import { IsString, IsEmail } from 'class-validator';
  *            format: email
  *        example:
  *           name: faker
- *           email: fake@email.com
+ *           email: fake@gmail.com
  *           role: user
  */
 class EditUserDto {

@@ -52,7 +52,7 @@ router.post('/activate/:activationToken', validateRequest(EmptyDto), AuthControl
  *         required: true
  *      responses:
  *        200:
- *          description: An users object
+ *          description: User Logged in successfully
  */
 router.post('/localLogin', [validateRequest(loginUserDto)], AuthController.localLogin);
 router.post('/googleLogin', [validateRequest(CreateGoogleUserDto)], AuthController.googleLogin);
@@ -108,7 +108,7 @@ router.post('/refreshToken', validateRequest(EmptyDto), extractRefreshToken, Aut
  *         content:
  *           'application/json':
  *             schema:
- *               $ref: '#/components/schemas/Email DTO'
+ *               $ref: '#/components/schemas/forgotPassword DTO'
  *         required: true
  *      responses:
  *        200:

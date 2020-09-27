@@ -30,9 +30,9 @@ import { IsString, Length } from 'class-validator';
  *            format: email
  *        example:
  *           name: faker
- *           password: 12345
- *           passwordConfirm: 12345
- *           email: fake@email.com
+ *           password: admin1234
+ *           passwordConfirm: admin1234
+ *           email: fake@gmail.com
  *           role: user
  */
 class CreateLocalUserWithRoleDto {

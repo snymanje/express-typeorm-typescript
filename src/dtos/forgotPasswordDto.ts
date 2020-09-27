@@ -13,7 +13,7 @@ import { IsString } from 'class-validator';
  *            type: string
  *            format: email
  *        example:
- *           email: fake@email.com
+ *           email: fake@gmail.com
  */
 class forgotPassword {
   @IsString()

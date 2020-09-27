@@ -46,7 +46,7 @@ router.get('/', [checkJwt, checkRole(['admin'])], UserController.listAll);
  *            in: header
  *            required: false
  *            type: string
- *          - name: UserId
+ *          - name: id
  *            description: User Id
  *            in: path
  *            required: true
@@ -129,7 +129,7 @@ router.patch('/', validateRequest(EditUserDto), [checkJwt, checkRole(['admin'])]
  *            in: header
  *            required: false
  *            type: string
- *          - name: UserId
+ *          - name: id
  *            description: User Id
  *            in: path
  *            required: true
