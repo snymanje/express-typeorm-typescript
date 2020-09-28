@@ -47,7 +47,7 @@
     "nodemailer": "^6.4.11",
     "reflect-metadata": "^0.1.10",
     "sqlite3": "^4.0.3",
-    "swagger-jsdoc": "^3.7.0",
+    "swagger-jsdoc": "^4.2.0",
     "swagger-ui-express": "^4.1.4",
     "ts-node-dev": "^1.0.0-pre.63",
     "typeorm": "0.2.26",

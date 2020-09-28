@@ -84,7 +84,7 @@ router.post('/logout', AuthController.logout);
  *      produces:
  *          - application/json
  *      parameters:
- *          - name: refresh-token
+ *          - name: refreshToken
  *            description: Authentication Token
  *            in: header
  *            required: false

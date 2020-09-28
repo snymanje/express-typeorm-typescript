@@ -18,12 +18,6 @@ const router = Router();
  *      tags: [User CRUD Operations]
  *      produces:
  *          - application/json
- *      parameters:
- *          - name: Authorization
- *            description: Authentication Token
- *            in: header
- *            required: false
- *            type: string
  *      responses:
  *        200:
  *          description: All users retreived successfully.
@@ -41,11 +35,6 @@ router.get('/', [checkJwt, checkRole(['admin'])], UserController.listAll);
  *      produces:
  *          - application/json
  *      parameters:
- *          - name: Authorization
- *            description: Authentication Token
- *            in: header
- *            required: false
- *            type: string
  *          - name: id
  *            description: User Id
  *            in: path
@@ -67,14 +56,6 @@ router.get('/:id([0-9]+)', [checkJwt, checkRole(['admin'])], UserController.getO
  *      tags: [User CRUD Operations]
  *      produces:
  *          - application/json
- *      security:
- *          - bearerAuth: []
- *      parameters:
- *          - name: Authorization
- *            description: Authentication Token
- *            in: header
- *            required: false
- *            type: string
  *      requestBody:
  *         content:
  *           'application/json':
@@ -97,13 +78,6 @@ router.post('/', validateRequest(CreateLocalUserWithRoleDto), [checkJwt, checkRo
  *      tags: [User CRUD Operations]
  *      produces:
  *          - application/json
- *      parameters:
- *          - name: authorization
- *            description: Authentication Token
- *            in: header
- *            required: false
- *            schema:
- *              type: string
  *      requestBody:
  *         content:
  *           'application/json':
@@ -126,8 +100,6 @@ router.patch('/', validateRequest(EditUserDto), [checkJwt, checkRole(['admin'])]
  *      tags: [User CRUD Operations]
  *      produces:
  *          - application/json
- *      security:
- *          - bearerAuth: []
  *      parameters:
  *          - name: id
  *            description: User Id
