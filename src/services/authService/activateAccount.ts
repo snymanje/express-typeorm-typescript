@@ -23,9 +23,7 @@ export default async (activationToken: string): Promise<IUser> => {
     throw new AppError('This account is already active', 400);
   }
 
-  user.active = true;
-  user.accountActivationExpires = new Date(Date.now());
-  user.accountActivationToken = null;
+  await user.activateAccount();
   await userRepository.save(user);
 
   return user.toClientUserData();

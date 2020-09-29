@@ -21,9 +21,9 @@ import { IsString } from 'class-validator';
  *            type: string
  *            format: password
  *        example:
- *           passwordCurrent: 1234567895
- *           password: 123456
- *           passwordConfirm: 123456
+ *           passwordCurrent: "1234567895"
+ *           password: "123456"
+ *           passwordConfirm: "123456"
  */
 class updatePasswordDto {
   @IsString()

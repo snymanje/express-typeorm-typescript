@@ -21,9 +21,9 @@ import { IsEmail, IsString } from 'class-validator';
  *            type: string
  *            format: password
  *        example:
- *           email: fake@gmail.com
- *           password: 123456
- *           passwordConfirm: 123456
+ *           email: "fake@gmail.com"
+ *           password: "123456"
+ *           passwordConfirm: "123456"
  */
 class resetPasswordDto {
   @IsEmail()

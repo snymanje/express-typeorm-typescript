@@ -24,7 +24,7 @@ export default async (user: IUserWithActivationToken): Promise<void> => {
   } catch (err) {
     /*         user.passwordResetToken = undefined;
                   user.passwordResetExpires = undefined; */
-
+    console.log(err);
     throw new AppError('There was an error trying to send the email to activate account!', 500);
   }
 };

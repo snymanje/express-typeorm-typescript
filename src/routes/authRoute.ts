@@ -3,8 +3,8 @@ import { Router } from 'express';
 import AuthController from '../controllers/authController';
 //import { checkJwt } from '../middlewares/checkJwt';
 import validateRequest from '../middlewares/validate';
-import CreateUserDto from '../dtos/CreateLocalUserDto';
-import loginUserDto from '../dtos/LoginLocalUserDto';
+import CreateLocalUserDto from '../dtos/CreateLocalUserDto';
+import LoginLocalUserDto from '../dtos/LoginLocalUserDto';
 import EmptyDto from '../dtos/EmptyDto';
 import forgotPasswordDto from '../dtos/forgotPasswordDto';
 import CreateGoogleUserDto from '../dtos/CreateGoogleUserDto';
@@ -54,9 +54,30 @@ router.post('/activate/:activationToken', validateRequest(EmptyDto), AuthControl
  *        200:
  *          description: User Logged in successfully
  */
-router.post('/localLogin', [validateRequest(loginUserDto)], AuthController.localLogin);
+router.post('/localLogin', [validateRequest(LoginLocalUserDto)], AuthController.localLogin);
 router.post('/googleLogin', [validateRequest(CreateGoogleUserDto)], AuthController.googleLogin);
-router.post('/localSignup', [validateRequest(CreateUserDto)], AuthController.localSignUp);
+
+//SignUp new user
+/**
+ * @swagger
+ * path:
+ *  /auth/localSignup:
+ *    post:
+ *      summary: Signup a new user
+ *      tags: [Authentication and Autherization]
+ *      produces:
+ *          - application/json
+ *      requestBody:
+ *         content:
+ *           'application/json':
+ *             schema:
+ *               $ref: '#/components/schemas/CreateLocalUser DTO'
+ *         required: true
+ *      responses:
+ *        200:
+ *          description: User signed up successfully.
+ */
+router.post('/localSignup', [validateRequest(CreateLocalUserDto)], AuthController.localSignUp);
 router.post('/googleSignup', [validateRequest(CreateGoogleUserDto)], AuthController.googleSignUp);
 
 /**
@@ -84,7 +105,7 @@ router.post('/logout', AuthController.logout);
  *      produces:
  *          - application/json
  *      parameters:
- *          - name: refreshToken
+ *          - name: refreshtoken
  *            description: Authentication Token
  *            in: header
  *            required: false
@@ -119,14 +140,14 @@ router.post('/forgotPassword', validateRequest(forgotPasswordDto), AuthControlle
 /**
  * @swagger
  * path:
- *  /auth/resetPassword:
+ *  /auth/resetPassword/{resetToken}:
  *    post:
  *      summary: Reset password with reset token sent via email
  *      tags: [Authentication and Autherization]
  *      produces:
  *          - application/json
  *      parameters:
- *          - name: Auth Token
+ *          - name: resetToken
  *            description: Authentication Token
  *            in: path
  *            required: false
@@ -143,6 +164,25 @@ router.post('/forgotPassword', validateRequest(forgotPasswordDto), AuthControlle
  */
 router.post('/resetPassword/:resetToken', validateRequest(resetPasswordDto), AuthController.resetPassword);
 
+/**
+ * @swagger
+ * path:
+ *  /auth/updatePassword:
+ *    post:
+ *      summary: Update password for currently logged on user
+ *      tags: [Authentication and Autherization]
+ *      produces:
+ *          - application/json
+ *      requestBody:
+ *         content:
+ *           'application/json':
+ *             schema:
+ *               $ref: '#/components/schemas/UpdatePassword DTO'
+ *         required: true
+ *      responses:
+ *        200:
+ *          description: Password updated successfully!
+ */
 router.post('/updatePassword', validateRequest(updatePasswordDto), checkJwt, AuthController.updatePassword);
 
 export default router;

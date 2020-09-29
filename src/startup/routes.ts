@@ -41,7 +41,7 @@ export default (app: Application): void => {
 
   // Swagger set up
   const specs = swaggerJsdoc(swaggerDocument);
-  app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
+  app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(specs));
 
   app.all('*', (req: Request, res: Response, next: NextFunction) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!!!`, 404));

@@ -15,19 +15,14 @@ export default async (requestBody: ResetPasswordDto, resetToken: string): Promis
   const userRepository = await getRepository(User);
   const user = await userRepository.findOne({
     passwordResetToken: hashedToken,
-    passwordResetExpires: MoreThan(Date.now())
+    passwordResetExpires: MoreThan(new Date(Date.now()))
   });
 
   if (!user) {
     throw new AppError('The user for this token does not exist or this token has expired', 400);
   }
 
-  user.password = password;
-  user.passwordResetToken = undefined;
-  user.passwordResetExpires = undefined;
-
-  await user.hashLocalPassword();
-  await user.setPasswordChangedAt();
+  await user.updatePassword(password);
 
   await userRepository.save(user);
 

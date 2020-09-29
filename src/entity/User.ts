@@ -38,9 +38,6 @@ export class User {
   @Column({ nullable: true })
   password: string;
 
-  /*   @Column({ nullable: true })
-  passwordConfirm: string; */
-
   @Column({ nullable: false })
   @IsEmail(
     {},
@@ -76,12 +73,17 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  async hashLocalPassword(): Promise<void> {
-    this.password = await bcrypt.hash(this.password, 12);
+  async activateAccount(): Promise<void> {
+    this.active = true;
+    this.accountActivationExpires = new Date(Date.now());
+    this.accountActivationToken = null;
   }
 
-  async setPasswordChangedAt(): Promise<void> {
+  async updatePassword(password: string): Promise<void> {
     this.passwordChangedAt = new Date(Date.now());
+    this.password = await bcrypt.hash(password, 12);
+    this.passwordResetToken = null;
+    this.passwordResetExpires = null;
   }
 
   @BeforeInsert()
