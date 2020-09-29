@@ -13,6 +13,7 @@ Authentication is the part of an application that can take a lot of time to get 
 * Update Password
 * Open API\Swagger documentation
 * Build with TypeScript
+* Using TypeORM with SQLite
 
 ## Roadmap
 * Unit Tests
