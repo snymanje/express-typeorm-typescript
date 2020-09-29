@@ -23,6 +23,5 @@ Authentication is the part of an application that can take a lot of time to get 
 * Login with Microsoft
 * Login with LinkedIn
 
-
-
-
+![swaggerImg1](/content/swaggerImg1.JPG)
+![swaggerImg2](/images/swaggerImg2.JPG)
