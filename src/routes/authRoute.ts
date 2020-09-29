@@ -1,13 +1,12 @@
 import { checkJwt } from './../middlewares/checkJwt';
 import { Router } from 'express';
 import AuthController from '../controllers/authController';
-//import { checkJwt } from '../middlewares/checkJwt';
 import validateRequest from '../middlewares/validate';
 import CreateLocalUserDto from '../dtos/CreateLocalUserDto';
 import LoginLocalUserDto from '../dtos/LoginLocalUserDto';
 import EmptyDto from '../dtos/EmptyDto';
 import forgotPasswordDto from '../dtos/forgotPasswordDto';
-import CreateGoogleUserDto from '../dtos/CreateGoogleUserDto';
+import GoogleUserDto from '../dtos/GoogleUserDto';
 import { extractRefreshToken } from '../middlewares/extractRefreshToken';
 import resetPasswordDto from '../dtos/ResetPasswordDto';
 import updatePasswordDto from '../dtos/UpdatePasswordDto';
@@ -55,7 +54,28 @@ router.post('/activate/:activationToken', validateRequest(EmptyDto), AuthControl
  *          description: User Logged in successfully
  */
 router.post('/localLogin', [validateRequest(LoginLocalUserDto)], AuthController.localLogin);
-router.post('/googleLogin', [validateRequest(CreateGoogleUserDto)], AuthController.googleLogin);
+
+//Login New Google User
+/**
+ * @swagger
+ * path:
+ *  /auth/googleLogin:
+ *    post:
+ *      summary: Login google user
+ *      tags: [Authentication and Autherization]
+ *      produces:
+ *          - application/json
+ *      requestBody:
+ *         content:
+ *           'application/json':
+ *             schema:
+ *               $ref: '#/components/schemas/GoogleUser DTO'
+ *         required: true
+ *      responses:
+ *        200:
+ *          description: User logged in successfully.
+ */
+router.post('/googleLogin', [validateRequest(GoogleUserDto)], AuthController.googleLogin);
 
 //SignUp new user
 /**
@@ -78,7 +98,28 @@ router.post('/googleLogin', [validateRequest(CreateGoogleUserDto)], AuthControll
  *          description: User signed up successfully.
  */
 router.post('/localSignup', [validateRequest(CreateLocalUserDto)], AuthController.localSignUp);
-router.post('/googleSignup', [validateRequest(CreateGoogleUserDto)], AuthController.googleSignUp);
+
+//SignUp New Google User
+/**
+ * @swagger
+ * path:
+ *  /auth/googleSignup:
+ *    post:
+ *      summary: Signup a new google user
+ *      tags: [Authentication and Autherization]
+ *      produces:
+ *          - application/json
+ *      requestBody:
+ *         content:
+ *           'application/json':
+ *             schema:
+ *               $ref: '#/components/schemas/GoogleUser DTO'
+ *         required: true
+ *      responses:
+ *        200:
+ *          description: User signed up successfully.
+ */
+router.post('/googleSignup', [validateRequest(GoogleUserDto)], AuthController.googleSignUp);
 
 /**
  * @swagger
